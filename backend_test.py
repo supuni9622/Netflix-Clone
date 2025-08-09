@@ -224,7 +224,12 @@ class NetflixCloneAPITester:
                 }
                 logger.error(f"❌ Search for '{query}' failed - HTTP {response['status']}")
         
-        self.test_results["tmdb_integration"]["search"] = search_results
+        # Check if all searches passed
+        all_passed = all(result.get("status") == "PASS" for result in search_results.values())
+        self.test_results["tmdb_integration"]["search"] = {
+            "status": "PASS" if all_passed else "FAIL",
+            "individual_results": search_results
+        }
     
     async def test_tmdb_movie_details(self):
         """Test /api/movies/{movie_id} endpoint"""
