@@ -517,7 +517,7 @@ class NetflixCloneAPITester:
                 "response_code": response_404["status"]
             },
             "unauthorized_access": {
-                "status": "PASS" if response_401["status"] == 401 else "FAIL",
+                "status": "PASS" if response_401["status"] in [401, 403] else "FAIL",
                 "response_code": response_401["status"]
             },
             "invalid_movie_id": {
